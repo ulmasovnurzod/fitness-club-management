@@ -1,14 +1,17 @@
 package uz.codelog.fitnessclubmanagement.mapper;
 
+import org.springframework.stereotype.Component;
+import uz.codelog.fitnessclubmanagement.dto.RegisterRequestDto;
 import uz.codelog.fitnessclubmanagement.dto.UserCreateDto;
 import uz.codelog.fitnessclubmanagement.dto.UserResponseDto;
 import uz.codelog.fitnessclubmanagement.entity.User;
 import uz.codelog.fitnessclubmanagement.enums.Role;
 import uz.codelog.fitnessclubmanagement.enums.UserStatus;
 
+@Component
 public class UserMapper {
 
-    public User toEntity(UserCreateDto userCreateDto) {
+    public User toEntity(RegisterRequestDto userCreateDto) {
         return  User.builder()
                 .fullName(userCreateDto.fullName())
                 .email(userCreateDto.email())

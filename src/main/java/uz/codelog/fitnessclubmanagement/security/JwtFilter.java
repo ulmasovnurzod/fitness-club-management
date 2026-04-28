@@ -24,14 +24,15 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
 
         String path = request.getServletPath();
 
         return path.startsWith("/api/auth/")
                 || path.startsWith("/swagger-ui")
+                || path.equals("/swagger-ui.html")
+                || path.equals("/v3/api-docs")
                 || path.startsWith("/v3/api-docs/");
-
     }
 
 

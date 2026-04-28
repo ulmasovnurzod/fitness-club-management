@@ -14,6 +14,8 @@ public enum ErrorType {
     MEMBERSHIP_PLAN_NOT_FOUND("Membership plan not found", HttpStatus.NOT_FOUND),
     SUBSCRIPTION_NOT_FOUND("Subscription not found", HttpStatus.NOT_FOUND),
     ACTIVE_SUBSCRIPTION_ALREADY_EXISTS("Active subscription already exists", HttpStatus.CONFLICT),
+    VALIDATION_ERROR("validation.error", HttpStatus.BAD_REQUEST),
+
 
     PAYMENT_NOT_FOUND("Payment not found", HttpStatus.NOT_FOUND),
     PAYMENT_NOT_SUCCESS("Payment is not successful", HttpStatus.BAD_REQUEST),
@@ -23,7 +25,8 @@ public enum ErrorType {
     TOKEN_NOT_FOUND("Token not found", HttpStatus.UNAUTHORIZED),
 
     BAD_REQUEST("Bad request", HttpStatus.BAD_REQUEST),
-    INTERNAL_ERROR("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_ERROR("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    EMAIL_SEND_FAILED("Failed.to.send.email", HttpStatus.INTERNAL_SERVER_ERROR );
 
     private final String msg;
     private HttpStatus status = HttpStatus.BAD_REQUEST;
