@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,8 +19,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
-    private final CustomUserDetailsSecurity customUserDetailsSecurity;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsSecurity userDetailsSecurity;
+
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -43,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
 
-        if (authHeader != null && !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 
             filterChain.doFilter(request, response);
             return;
@@ -53,8 +52,8 @@ public class JwtFilter extends OncePerRequestFilter {
             String jwt = authHeader.substring(7);
             String username = jwtUtils.extractUsername(jwt);
 
-            if (username == null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(jwt);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsSecurity.loadUserByUsername(username);
 
                 if (jwtUtils.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authenticationToken =
@@ -72,7 +71,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        }catch (Exception e) {
+        } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid or expired access token");
         }

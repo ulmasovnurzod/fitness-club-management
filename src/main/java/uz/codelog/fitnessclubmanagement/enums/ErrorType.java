@@ -12,7 +12,6 @@ public enum ErrorType {
     UNAUTHORIZED("unauthorized", HttpStatus.UNAUTHORIZED),
 
     MEMBERSHIP_PLAN_NOT_FOUND("Membership plan not found", HttpStatus.NOT_FOUND),
-    SUBSCRIPTION_NOT_FOUND("Subscription not found", HttpStatus.NOT_FOUND),
     ACTIVE_SUBSCRIPTION_ALREADY_EXISTS("Active subscription already exists", HttpStatus.CONFLICT),
     VALIDATION_ERROR("validation.error", HttpStatus.BAD_REQUEST),
 
@@ -26,7 +25,12 @@ public enum ErrorType {
 
     BAD_REQUEST("Bad request", HttpStatus.BAD_REQUEST),
     INTERNAL_ERROR("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
-    EMAIL_SEND_FAILED("Failed.to.send.email", HttpStatus.INTERNAL_SERVER_ERROR );
+    EMAIL_SEND_FAILED("Failed.to.send.email", HttpStatus.INTERNAL_SERVER_ERROR),
+    USER_ALREADY_VERIFIED("User.already.verified", HttpStatus.UNAUTHORIZED),
+    INVALID_VERIFICATION_CODE("invalid.verification.code",HttpStatus.UNAUTHORIZED ),
+    VERIFICATION_CODE_ALREADY_USED("verification.code.already.used",HttpStatus.CONFLICT ),
+    USER_NOT_VERIFIED("User not verified", HttpStatus.UNAUTHORIZED ),
+    DEVICE_ID_REQUIRED("Device ID is required", HttpStatus.BAD_REQUEST );
 
     private final String msg;
     private HttpStatus status = HttpStatus.BAD_REQUEST;
